@@ -2,6 +2,7 @@ import re
 import csv
 from collections import Counter
 
+import jieba
 
 STOP_WORDS = {"的", "了", "是", "在", "和", "也", "就", "都",
               "啊", "呢", "吧", "吗", "呀", "哦", "哇",  "哈",
@@ -74,8 +75,8 @@ if __name__ == "__main__":
     raw_text = read_text_file(input_file)
     #清洗文本
     clean_text_str = clean_text(raw_text)
-    #按空格切分，得到词列表
-    word_list = clean_text_str.split()
+    #使用jieba进行分词，得到词列表
+    word_list = [w for w in jieba.cut(clean_text_str) if w.strip()]
     #过滤停用词
     filtered_words = filter_stop_words(word_list)
     #统计词频
